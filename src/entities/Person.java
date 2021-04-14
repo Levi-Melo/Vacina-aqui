@@ -2,7 +2,6 @@ package entities;
 
 import data.PersonData;
 import org.jetbrains.annotations.NotNull;
-
 import javax.swing.*;
 import java.sql.SQLException;
 
@@ -34,10 +33,12 @@ public class Person {
         p.age = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite sua idade"));
         p.email = JOptionPane.showInputDialog(null, "Digite seu email");
         p.address = JOptionPane.showInputDialog(null, "Digite seu Endereço");
-        p.password = createPassword();
         p.profileId = profileId;
         p.priority = 3;
 
+        Password pwd = new Password();
+        p.password = pwd.createPassword(p.email);
+        PersonData insert = new PersonData();
 
         if (profileId == 3){
             //paciente
@@ -49,51 +50,10 @@ public class Person {
             if(p.age>=70){
                 p.priority = 1;
             }
-            PersonData insr = new PersonData();
-            insr.insertPerson(p);
+            insert.insertPerson(p);
             return;
         }
-        PersonData insr = new PersonData();
-        insr.insertPerson(p);
-    }
-
-    private String createPassword(){
-        String randomPassword = "";
-        for (int j = 0; j <2; j++) {
-            randomPassword += randomNumber();
-            randomPassword += randomCharacter();
-
-        }
-        for (int j = 0; j < 2; j++) {
-            randomPassword += randomCharacter();
-            randomPassword += randomNumber();
-
-        }
-        System.out.println(randomPassword);
-        return randomPassword;
-    }
-
-    public static char randomCharacter() {
-
-        int rand = (int) (Math.random() * 62);
-        if (rand <= 35) {
-            int uppercase = rand + 55;
-            return (char) (uppercase);
-        } else {
-            int lowercase = rand + 61;
-            return (char) (lowercase);
-        }
-    }
-
-    public static char randomNumber() {
-        int rand = (int) (Math.random() * 62);
-
-        if (rand <= 9) {
-            int number = rand + 48;
-            return (char) (number);
-        } else {
-            return randomNumber();
-        }
+        insert.insertPerson(p);
     }
 
     Boolean getBoolean(int number){ return number == 0; }
