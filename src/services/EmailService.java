@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.Properties;
 
 public class EmailService {
-    public void sendEmail( String email, String subject, String content ){
+    public void sendEmail( String receiver, String subject, String content ){
         Properties props = new Properties();
 
         String sender = "vacinaquiprojeto@gmail.com";
@@ -33,7 +33,7 @@ public class EmailService {
                     }
                 });
 
-        /** Ativa Debug para sessão */
+
         session.setDebug(true);
 
         try {
@@ -42,12 +42,11 @@ public class EmailService {
             //Remetente
 
             Address[] toUser = InternetAddress //Destinatário(s)
-                    .parse(email);
+                    .parse(receiver);
 
             message.setRecipients(Message.RecipientType.TO, toUser);
             message.setSubject(subject);//subject
             message.setText(content);
-            /**Método para enviar a mensagem criada*/
             Transport.send(message);
 
             System.out.println("Feito!!!");
