@@ -39,7 +39,7 @@ public class Person {
         p.priority = 3;
 
         Password pwd = new Password();
-        p.password = pwd.createPassword(p.email);
+//        p.password = pwd.createPassword(p.email);
         PersonData insert = new PersonData();
 
         if (profileId == 3){

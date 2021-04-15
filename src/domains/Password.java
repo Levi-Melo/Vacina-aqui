@@ -1,18 +1,22 @@
-package entities;
+package domains;
 
+import data.PersonData;
 import services.EmailService;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class Password {
-    public String createPassword(String email){
-        String randomPassword = "";
+    public String createPassword(String email) throws IOException {
+        StringBuilder randomPassword = new StringBuilder();
         for (int j = 0; j <2; j++) {
-            randomPassword += randomNumber();
-            randomPassword += randomCharacter();
+            randomPassword.append(randomNumber());
+            randomPassword.append(randomCharacter());
 
         }
         for (int j = 0; j < 2; j++) {
-            randomPassword += randomCharacter();
-            randomPassword += randomNumber();
+            randomPassword.append(randomCharacter());
+            randomPassword.append(randomNumber());
 
         }
         System.out.println(randomPassword);
@@ -24,7 +28,7 @@ public class Password {
                 "Não esqueça que seu login é seu cpf, se esquecer é só clicar em redefinir sinha no login.";
 
         emailServices.sendEmail(email, subject, content);
-        return randomPassword;
+        return randomPassword.toString();
     }
 
     private static char randomCharacter() {
@@ -50,5 +54,13 @@ public class Password {
         }
     }
 
-
+    public void forgetPassword(String email){
+        try {
+            String newPassword = createPassword(email);
+            PersonData p = new PersonData();
+            p.updatePassword(email,newPassword);
+        } catch (SQLException | IOException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }
