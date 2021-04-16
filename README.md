@@ -1,5 +1,5 @@
 <p align="center">
-<h1  align="center">Vacin'aqui
+<h1  align="center">Vacin'aqui</h1>
   <h3 align="center">   Vaccine queue management software for covid-19</h3>
  <br />
   <p align="center">
