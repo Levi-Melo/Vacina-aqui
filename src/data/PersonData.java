@@ -43,7 +43,7 @@ public class PersonData {
                 ""+p.priority+");";
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        Connection connection = connectionFactory.getConection();
+        Connection connection = connectionFactory.getConnection();
 
         Statement stm = connection.createStatement();
         stm.execute(sql,Statement.RETURN_GENERATED_KEYS);
@@ -75,7 +75,7 @@ public class PersonData {
         String pessoa ="";
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        Connection connection = connectionFactory.getConection();
+        Connection connection = connectionFactory.getConnection();
 
         Statement stm = connection.createStatement();
         stm.execute("USE  PROJETO_COVID;\n" +
@@ -115,7 +115,7 @@ public class PersonData {
         int perfilPage = 0;
         try {
             ConnectionFactory connectionFactory = new ConnectionFactory();
-            Connection connection = connectionFactory.getConection();
+            Connection connection = connectionFactory.getConnection();
 
             Statement stm = connection.createStatement();
             stm.execute("SELECT * FROM PEOPLE WHERE CPF = '"+login+"';");
@@ -142,28 +142,9 @@ public class PersonData {
         }
     }
 
-    public void vacineDate(LocalDate date, String cpf) throws SQLException, IOException {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        Connection connection = connectionFactory.getConection();
-
-        Statement stm = connection.createStatement();
-        stm.execute("UPDATE PEOPLE\n" +
-                "SET DATA_DE_VACINACAO = '" + date +"'\n" +
-                "WHERE CPF = '"+cpf+"';");
-        int linhasModificadas = stm.getUpdateCount();
-        stm.execute("SELECT DATA_DE_VACINACAO FROM PEOPLE WHERE CPF= '"+cpf+"';");
-        ResultSet rst = stm.getResultSet();
-        while (rst.next()){
-            if (linhasModificadas>0){
-                JOptionPane.showMessageDialog(null, "sucesso");
-            }
-        }
-        connection.close();
-    }
-
     public void updatePassword(String email, String newPassword) throws SQLException, IOException{
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        Connection connection = connectionFactory.getConection();
+        Connection connection = connectionFactory.getConnection();
 
 
         Statement stm = connection.createStatement();
@@ -185,7 +166,7 @@ public class PersonData {
     public double[] report(LocalDate data1, LocalDate data2) throws SQLException, IOException {
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        Connection connection = connectionFactory.getConection();
+        Connection connection = connectionFactory.getConnection();
 
         Statement stm = connection.createStatement();
         stm.execute("SELECT IDADE FROM PEOPLE WHERE DATA_DE_VACINACAO BETWEEN "+data1+" AND "+data2+" ORDER BY DATA_DE_VACINACAO;");
