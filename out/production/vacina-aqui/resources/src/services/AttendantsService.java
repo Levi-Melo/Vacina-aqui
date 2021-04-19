@@ -13,9 +13,20 @@ import java.time.LocalDate;
 
 public class AttendantsService {
     public void confirmationOfVaccine() throws SQLException, IOException {
+        LocalDate date = LocalDate.now();
+
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        Connection connection = connectionFactory.getConection();
+
+        Statement stm = connection.createStatement();
+        stm.execute("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE;");
+
+        ResultSet rst = stm.getResultSet();
+        rst.absolute(1);
+        rst.updateString("DATA_DE_VACINACAO", String.valueOf(date));
+
         PersonData vacin = new PersonData();
         String cpf = JOptionPane.showInputDialog("informe o cpf do paciente");
-        LocalDate date = LocalDate.now();;
 
         vacin.vacineDate(date, cpf);
     }

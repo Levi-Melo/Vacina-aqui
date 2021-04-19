@@ -11,27 +11,36 @@ public class PersonData {
 
     public void insertPerson(Person p) throws SQLException, IOException {
         String sql;
-        if (p.profileId == 3) {
-             sql = "INSERT INTO PEOPLE(\n" +
-                    "CPF,\n" +
-                    "NOME,\n" +
-                    "IDADE,\n" +
-                    "ENDERECO,\n" +
-                    "CARGO_AREA_PUBLICA,\n" +
-                    "ID_PERFIL,\n" +
-                    "NIVEL_DE_PRIORIDADE\n" +
-                    ")VALUES('" + p.cpf + "','" + p.name + "'," + p.age + ",'" + p.address + "'," + p.healthPosition + "," + p.profileId + "," +p.priority+");";
-        }else {
-             sql = "INSERT INTO PEOPLE(\n" +
-                    "CPF,\n" +
-                    "NOME,\n" +
-                    "IDADE,\n" +
-                    "EMAIL,\n" +
-                    "PASSWORD,\n" +
-                    "ENDERECO,\n" +
-                    "ID_PERFIL\n" +
-                    ")VALUES('" + p.cpf + "','" + p.name + "'," + p.age + ",'" + p.email + "','" + p.password + "','" + p.address + "'," + p.profileId + ");";
-        }
+        sql = "INSERT INTO PEOPLE(\n" +
+             "    CPF,\n" +
+             "    NOME,\n" +
+             "    IDADE,\n" +
+             "    EMAIL,\n" +
+             "    PASSWORD,\n" +
+             "    ENDERECO,\n" +
+             "    NUMERO,\n" +
+             "    ESTADO,\n" +
+             "    CIDADE ,\n" +
+             "    BAIRRO,\n" +
+             "    CEP,\n" +
+             "    DATA_DE_VACINACAO,\n" +
+             "    CARGO_AREA_PUBLICA, \n" +
+             "    ID_PERFIL,\n" +
+             "    NIVEL_DE_PRIORIDADE\n" +
+             ")VALUES('" + p.cpf + "'," +
+                "'" + p.name + "'," +
+                "" + p.age + "," +
+                "'" + p.email + "'," +
+                "'" + p.password + "'," +
+                "'" + p.address + "'," +
+                "'" + p.addressNumber + "'," +
+                "'" + p.state + "'," +
+                "'" + p.district + "'," +
+                "'" + p.cep + "'," +
+                "null," +
+                "" + p.healthPosition + "," +
+                "" + p.profileId + "," +
+                ""+p.priority+");";
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConection();
@@ -50,7 +59,7 @@ public class PersonData {
             connection.close();
     }
 
-    public void removePerson (Person p) throws SQLException, IOException{
+    public void removePerson (String cpfRequested) throws SQLException, IOException{
         String cpf;
         String email;
         String name;
@@ -64,6 +73,7 @@ public class PersonData {
         String titleMessage = "Realmente Deseja Remover este usuario?";
 
         String pessoa ="";
+
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConection();
 
@@ -72,7 +82,7 @@ public class PersonData {
                 "SELECT \n" +
                 "\tp.*,\n" +
                 "\tpf.descricao\n" +
-                "FROM PEOPLE p INNER JOIN PERSON_PROFILE pf ON pf.id = p.ID_PERFIL WHERE p.cpf = '"+p.cpf+"';");
+                "FROM PEOPLE p INNER JOIN PERSON_PROFILE pf ON pf.id = p.ID_PERFIL WHERE p.cpf = '"+cpfRequested+"';");
         ResultSet rst = stm.getResultSet();
 
         while (rst.next()){
@@ -82,8 +92,6 @@ public class PersonData {
              email = rst.getString("EMAIL");
              String perfilprofile = rst.getString("DESCRICAO");
              pessoa =  name + "\n "+ perfilprofile+"\n " + email + "\n" + cpf +" \n"+ age ;
-
-
         }
 
         int confirm = JOptionPane.showOptionDialog(null, pessoa, titleMessage, JOptionPane.
@@ -93,7 +101,7 @@ public class PersonData {
             connection.close();
             return;
             }
-        stm.execute("DELETE FROM PEOPLE WHERE CPF = '" + p.cpf + "'");
+        stm.execute("DELETE FROM PEOPLE WHERE CPF = '" + cpfRequested + "'");
         int linhasModificadas = stm.getUpdateCount();
         if(linhasModificadas>0){
             JOptionPane.showMessageDialog(null,"Remoção Concluida");
@@ -174,7 +182,7 @@ public class PersonData {
 
     }
 
-    public long[] report(LocalDate data1, LocalDate data2) throws SQLException, IOException {
+    public double[] report(LocalDate data1, LocalDate data2) throws SQLException, IOException {
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConection();
@@ -183,14 +191,14 @@ public class PersonData {
         stm.execute("SELECT IDADE FROM PEOPLE WHERE DATA_DE_VACINACAO BETWEEN "+data1+" AND "+data2+" ORDER BY DATA_DE_VACINACAO;");
 
         ResultSet rst = stm.getResultSet();
-        long[] vacinForAgeRange = new long[4];
+        double[] vacinForAgeRange = new double[4];
 
         while (rst.next()) {
             int age = rst.getInt("IDADE");
 
             if(age>=90){
                 vacinForAgeRange[0] += 1;
-            };
+            }
             if(70<=age && age<90){
                 vacinForAgeRange[1] += 1;
             }

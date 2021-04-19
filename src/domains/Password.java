@@ -8,20 +8,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Password {
-    public String createPassword2(){
-        StringBuilder randomPassword = new StringBuilder();
-        for (int j = 0; j <2; j++) {
-            randomPassword.append(randomNumber());
-            randomPassword.append(randomCharacter());
-
-        }
-        for (int j = 0; j < 2; j++) {
-            randomPassword.append(randomCharacter());
-            randomPassword.append(randomNumber());
-
-        }
-        return randomPassword.toString();
-    }
 
     public String createPassword(String email) throws IOException {
         StringBuilder randomPassword = new StringBuilder();
@@ -38,10 +24,11 @@ public class Password {
         String password = randomPassword.toString();
 
         EmailService emailServices = new EmailService();
-
         String subject = "Senha do seu cadastro no Vacin'aqui!!";
         String content = "Olá novo funcionário essa é sua para acesso "+password+".\n" +
                 "Não esqueça que seu login é seu cpf, se esquecer é só clicar em redefinir sinha no login.";
+
+        emailServices.sendEmail(email,subject,content);
 
         return encode(password);
     }

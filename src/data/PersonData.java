@@ -1,6 +1,7 @@
 package data;
 
 import entities.Person;
+import static infrastructure.Cryptography.decode;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -10,6 +11,9 @@ import java.time.LocalDate;
 public class PersonData {
 
     public void insertPerson(Person p) throws SQLException, IOException {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        Connection connection = connectionFactory.getConnection();
+
         String sql;
         sql = "INSERT INTO PEOPLE(\n" +
              "    CPF,\n" +
@@ -27,33 +31,32 @@ public class PersonData {
              "    CARGO_AREA_PUBLICA, \n" +
              "    ID_PERFIL,\n" +
              "    NIVEL_DE_PRIORIDADE\n" +
-             ")VALUES('" + p.cpf + "'," +
-                "'" + p.name + "'," +
-                "" + p.age + "," +
-                "'" + p.email + "'," +
-                "'" + p.password + "'," +
-                "'" + p.address + "'," +
-                "'" + p.addressNumber + "'," +
-                "'" + p.state + "'," +
-                "'" + p.district + "'," +
-                "'" + p.cep + "'," +
-                "null," +
-                "" + p.healthPosition + "," +
-                "" + p.profileId + "," +
-                ""+p.priority+");";
+             ")VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        Connection connection = connectionFactory.getConnection();
+        PreparedStatement stm = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 
-        Statement stm = connection.createStatement();
-        stm.execute(sql,Statement.RETURN_GENERATED_KEYS);
+        stm.setString(1,p.cpf);
+        stm.setString(2,p.name);
+        stm.setInt(3,p.age);
+        stm.setString(4,p.email);
+        stm.setString(5,p.password);
+        stm.setString(6, p.address);
+        stm.setInt(7, p.addressNumber);
+        stm.setString(8, p.state);
+        stm.setString(9,p.city);
+        stm.setString(10,p.district);
+        stm.setInt(11,p.cep);
+        stm.setString(12,"null");
+        stm.setBoolean(13, p.healthPosition);
+        stm.setInt(14,p.profileId);
+        stm.setInt(15,p.priority);
 
+        stm.execute();
         ResultSet rst = stm.getGeneratedKeys();
-
         while (rst.next()){
             int id = rst.getInt(1);
             if(id > 0){
-                JOptionPane.showMessageDialog(null,"Cadastro Concluido");
+                JOptionPane.showMessageDialog(null,"Cadastro Concluido, id criado foi: "+id);
             }
         }
             connection.close();
@@ -77,12 +80,9 @@ public class PersonData {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        Statement stm = connection.createStatement();
-        stm.execute("USE  PROJETO_COVID;\n" +
-                "SELECT \n" +
-                "\tp.*,\n" +
-                "\tpf.descricao\n" +
-                "FROM PEOPLE p INNER JOIN PERSON_PROFILE pf ON pf.id = p.ID_PERFIL WHERE p.cpf = '"+cpfRequested+"';");
+        PreparedStatement stm = connection.prepareStatement("SELECT p.*,pf.descricao FROM PEOPLE p INNER JOIN PERSON_PROFILE pf ON pf.id = p.ID_PERFIL WHERE p.cpf = ?;");
+        stm.setString(1,cpfRequested);
+        stm.execute();
         ResultSet rst = stm.getResultSet();
 
         while (rst.next()){
@@ -101,8 +101,11 @@ public class PersonData {
             connection.close();
             return;
             }
-        stm.execute("DELETE FROM PEOPLE WHERE CPF = '" + cpfRequested + "'");
-        int linhasModificadas = stm.getUpdateCount();
+        PreparedStatement rmv = connection.prepareStatement("DELETE FROM PEOPLE WHERE CPF = ?");
+        rmv.setString(1,cpfRequested);
+        rmv.execute();
+
+        int linhasModificadas = rmv.getUpdateCount();
         if(linhasModificadas>0){
             JOptionPane.showMessageDialog(null,"Remoção Concluida");
             connection.close();
@@ -123,18 +126,19 @@ public class PersonData {
             ResultSet rst = stm.getResultSet();
             String newPassword = JOptionPane.showInputDialog(null,"Digite a sua  senha");
             while (rst.next()){
-                password = rst.getString("PASSWORD");
+                password = decode(rst.getString("PASSWORD"));
                 perfilPage = rst.getInt("ID_PERFIL");
             }
 
             if(password.equals(newPassword)){
                 //abrir a pagina do usuario de acordo com perfilPage
                 JOptionPane.showMessageDialog(null, "sucesso");
-            }
-            if(perfilPage == 1){
+                if(perfilPage == 1){
+                    //retorna pagina de acordo com o perfil
+                    connection.close();
+                    return;
+                }
                 //retorna pagina de acordo com o perfil
-                connection.close();
-                return;
             }
             connection.close();
         } catch (Exception e) {
@@ -147,10 +151,11 @@ public class PersonData {
         Connection connection = connectionFactory.getConnection();
 
 
-        Statement stm = connection.createStatement();
-        stm.execute("UPDATE PEOPLE\n" +
-                "SET PASSWORD = "+newPassword+"\n" +
-                "WHERE EMAIL = '"+email+"';");
+        PreparedStatement stm = connection.prepareStatement("UPDATE PEOPLE SET PASSWORD = ? WHERE EMAIL = ?;");
+        stm.setString(1,newPassword);
+        stm.setString(2,email);
+
+        stm.execute();
         int modifiedLines = stm.getUpdateCount();
 
         ResultSet rst = stm.getGeneratedKeys();
@@ -163,13 +168,15 @@ public class PersonData {
 
     }
 
-    public double[] report(LocalDate data1, LocalDate data2) throws SQLException, IOException {
+    public double[] report(LocalDate startDate, LocalDate endDate) throws SQLException, IOException {
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        Statement stm = connection.createStatement();
-        stm.execute("SELECT IDADE FROM PEOPLE WHERE DATA_DE_VACINACAO BETWEEN "+data1+" AND "+data2+" ORDER BY DATA_DE_VACINACAO;");
+        PreparedStatement stm = connection.prepareStatement("SELECT IDADE FROM PEOPLE WHERE DATA_DE_VACINACAO BETWEEN ? AND ? ORDER BY DATA_DE_VACINACAO;");
+        stm.setDate(1, Date.valueOf(startDate));
+        stm.setDate(2, Date.valueOf(endDate));
+        stm.execute();
 
         ResultSet rst = stm.getResultSet();
         double[] vacinForAgeRange = new double[4];

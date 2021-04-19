@@ -21,8 +21,8 @@ public class AttendantsService {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        Statement stm = connection.createStatement();
-        stm.execute("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE;");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE;");
+        stm.execute();
 
         ResultSet rst = stm.getResultSet();
 
@@ -61,11 +61,11 @@ public class AttendantsService {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        Statement stm = connection.createStatement();
-        stm.execute("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE;");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE;");
+        stm.execute();
 
         ResultSet rst = stm.getResultSet();
         rst.absolute(1);
-        rst.updateString("DATA_DE_VACINACAO", String.valueOf(date));
+        rst.updateDate("DATA_DE_VACINACAO", Date.valueOf(date));
     }
 }
