@@ -20,15 +20,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libraries/mysql-connector-java-8.0.17.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/libraries/activation-1.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -39,6 +30,15 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libraries/javax.mail.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libraries/mysql-connector-java-8.0.17.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

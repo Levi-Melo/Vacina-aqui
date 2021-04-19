@@ -3,7 +3,11 @@ import javax.swing.*;
 import data.PersonData;
 import entities.Person;
 
-import java.util.Calendar;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import static entities.Person.createPerson;
 
 
 public class AdministratorsService{
@@ -30,10 +34,9 @@ public class AdministratorsService{
             JOptionPane.showMessageDialog(null, "Cancelando");
             return;
         }
-        Person person = new Person();
         int charge = option + 1 ;
         try {
-            person.createPerson(charge,person);
+            Person person = createPerson(charge);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -48,44 +51,35 @@ public class AdministratorsService{
             JOptionPane.showMessageDialog(null, "Cancelando");
             return;
         }
-        Person person = new Person();
+
         try {
-            person.cpf = JOptionPane.showInputDialog(null, "Digite seu CPF sem caracteres especiais");
+            String cpf = JOptionPane.showInputDialog(null, "Digite seu CPF sem caracteres especiais");
             PersonData rmv = new PersonData();
-            rmv.removePerson(person);
+            rmv.removePerson(cpf);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-    void generateReport(){
+    void reportGenerator(){
+        String date1 = JOptionPane.showInputDialog(null, "digite a data Inicial do seu relatorio(dd/mm/aaaa)");
+        String date2 = JOptionPane.showInputDialog(null, "digite a data Final do seu relatorio(dd/mm/aaaa)");
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate start = LocalDate.parse(date1, formato);
+        LocalDate end = LocalDate.parse(date2, formato);
+        Duration diff = Duration.between(start.atStartOfDay(), end.atStartOfDay());
+        double diffDays = diff.toDays();
+
         try {
-            int dia = 16;
-            int mes = 4;
-            int ano = 2021;
-            String end = ano+""+mes+""+dia;
-
-            Calendar a = Calendar.getInstance();
-            a.set(ano, mes, dia);//data maior
-
-            dia = 16;
-            mes = 4;
-            ano = 2020;
-            String start = ano+""+mes+""+dia;
-
-            Calendar b = Calendar.getInstance();
-            b.set(2020, 4, 15);// data menor
-
-            a.add(Calendar.DATE, - b.get(Calendar.DAY_OF_YEAR));
-            int quantidadeDeDias = a.get(Calendar.DAY_OF_YEAR);
-
             PersonData report = new PersonData();
-            int[] vacinForAgeRange = report.report(start,end);
-            int[] medias = new int[4];
+            double[] vacinForAgeRange = report.report(start,end);
+            double[] averages = new double[4];
 
             for (int i=0;i<vacinForAgeRange.length;i++){
-                medias[i] = vacinForAgeRange[i]/quantidadeDeDias;
+                averages[i] = vacinForAgeRange[i]/diffDays;
+                System.out.println(averages[i]);
             }
         }
         catch (Exception e) {

@@ -9,22 +9,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class AttendantsService {
-    void confirmationOfVaccine() throws SQLException, IOException {
+    public void confirmationOfVaccine() throws SQLException, IOException {
         PersonData vacin = new PersonData();
-
         String cpf = JOptionPane.showInputDialog("informe o cpf do paciente");
-        Calendar c = Calendar.getInstance();
-        Date data = c.getTime();
+        LocalDate date = LocalDate.now();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        String dataFormatada = sdf.format(data);
-        vacin.vacineDate(dataFormatada ,cpf);
-
+        vacin.vacineDate(date, cpf);
     }
 
     public void consultQueue() throws SQLException, IOException {

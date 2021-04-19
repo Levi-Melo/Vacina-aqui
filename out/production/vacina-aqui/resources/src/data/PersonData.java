@@ -5,6 +5,7 @@ import entities.Person;
 import javax.swing.*;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 
 public class PersonData {
 
@@ -133,13 +134,13 @@ public class PersonData {
         }
     }
 
-    public void vacineDate(String date, String cpf) throws SQLException, IOException{
+    public void vacineDate(LocalDate date, String cpf) throws SQLException, IOException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConection();
 
         Statement stm = connection.createStatement();
         stm.execute("UPDATE PEOPLE\n" +
-                "SET DATA_DE_VACINACAO = "+date+"\n" +
+                "SET DATA_DE_VACINACAO = '" + date +"'\n" +
                 "WHERE CPF = '"+cpf+"';");
         int linhasModificadas = stm.getUpdateCount();
         stm.execute("SELECT DATA_DE_VACINACAO FROM PEOPLE WHERE CPF= '"+cpf+"';");
@@ -150,7 +151,6 @@ public class PersonData {
             }
         }
         connection.close();
-
     }
 
     public void updatePassword(String email, String newPassword) throws SQLException, IOException{
@@ -174,7 +174,7 @@ public class PersonData {
 
     }
 
-    public int[] report(String data1, String data2) throws SQLException, IOException {
+    public long[] report(LocalDate data1, LocalDate data2) throws SQLException, IOException {
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConection();
@@ -183,7 +183,7 @@ public class PersonData {
         stm.execute("SELECT IDADE FROM PEOPLE WHERE DATA_DE_VACINACAO BETWEEN "+data1+" AND "+data2+" ORDER BY DATA_DE_VACINACAO;");
 
         ResultSet rst = stm.getResultSet();
-        int[] vacinForAgeRange = new int[4];
+        long[] vacinForAgeRange = new long[4];
 
         while (rst.next()) {
             int age = rst.getInt("IDADE");

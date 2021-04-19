@@ -3,6 +3,9 @@ import javax.swing.*;
 import data.PersonData;
 import entities.Person;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 
@@ -60,22 +63,25 @@ public class AdministratorsService{
     }
 
     void generateReport(){
+        String date1 = JOptionPane.showInputDialog(null, "digite a data Inicial do seu relatorio(dd/mm/aaaa)");
+        String date2 = JOptionPane.showInputDialog(null, "digite a data Final do seu relatorio(dd/mm/aaaa)");
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        LocalDate start = LocalDate.parse(date1, formato);
+        LocalDate end = LocalDate.parse(date2, formato);
+
+        Duration diff = Duration.between(start.atStartOfDay(), end.atStartOfDay());
+        long diffDays = diff.toDays();
         try {
-            String start = "";
-            String end ="";
-            Calendar a = Calendar.getInstance();
-            a.set(2021, 4, 16);//data maior
 
-            Calendar b = Calendar.getInstance();
-            b.set(2020, 4, 15);// data menor
+            PersonData report = new PersonData();
+            long[] vacinForAgeRange = report.report(start,end);
+            long[] medias = new long[4];
 
-            a.add(Calendar.DATE, - b.get(Calendar.DAY_OF_YEAR));
-            int quantidadeDeDias = a.get(Calendar.DAY_OF_YEAR);
-            System.out.println(quantidadeDeDias);
-
-        PersonData report = new PersonData();
-        int [] array = report.report(start,end);
-
+            for (int i=0;i<vacinForAgeRange.length;i++){
+                medias[i] = vacinForAgeRange[i]/diffDays;
+            }
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
