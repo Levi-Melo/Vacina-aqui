@@ -6,7 +6,7 @@
    Project for the Computing Solutions Programming and Software Modeling classes
        <br />
     <br />
-    Back-end eveloped by <a href="https://www.linkedin.com/in/levi-melo-dos-santos-5277441a1//">Levi Melo dos Santos</a>
+    Back-end developed by <a href="https://www.linkedin.com/in/levi-melo-dos-santos-5277441a1//">Levi Melo dos Santos</a>
   </p>
 </p>
 
