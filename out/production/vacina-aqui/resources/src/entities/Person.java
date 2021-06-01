@@ -1,11 +1,9 @@
 package entities;
-
-import data.PersonData;
 import domains.Password;
-import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 public class Person {
     public String name;

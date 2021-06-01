@@ -36,7 +36,7 @@ INSERT INTO PEOPLE(
 	'Levi Melo dos Santos',
 	20,
 	'Levi.Melo@outlook.com.br',
-	'Azxs1230',
+	'QXp4czEyMzA=',
 	'Avenida Paulista',
 	123,
 	'SP',

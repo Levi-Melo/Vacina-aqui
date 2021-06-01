@@ -27,11 +27,10 @@ public class PersonData {
              "    CIDADE ,\n" +
              "    BAIRRO,\n" +
              "    CEP,\n" +
-             "    DATA_DE_VACINACAO,\n" +
              "    CARGO_AREA_PUBLICA, \n" +
              "    ID_PERFIL,\n" +
              "    NIVEL_DE_PRIORIDADE\n" +
-             ")VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+             ")VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
         PreparedStatement stm = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 
@@ -46,10 +45,9 @@ public class PersonData {
         stm.setString(9,p.city);
         stm.setString(10,p.district);
         stm.setInt(11,p.cep);
-        stm.setString(12,"null");
-        stm.setBoolean(13, p.healthPosition);
-        stm.setInt(14,p.profileId);
-        stm.setInt(15,p.priority);
+        stm.setBoolean(12, p.healthPosition);
+        stm.setInt(13,p.profileId);
+        stm.setInt(14,p.priority);
 
         stm.execute();
         ResultSet rst = stm.getGeneratedKeys();
@@ -110,11 +108,9 @@ public class PersonData {
             JOptionPane.showMessageDialog(null,"Remoção Concluida");
             connection.close();
         }
-
     }
 
-    public void personLogin(String login) {
-        String password = "";
+    public void personLogin(String login, String password) {
         int perfilPage = 0;
         try {
             ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -124,9 +120,9 @@ public class PersonData {
             stm.execute("SELECT * FROM PEOPLE WHERE CPF = '"+login+"';");
 
             ResultSet rst = stm.getResultSet();
-            String newPassword = JOptionPane.showInputDialog(null,"Digite a sua  senha");
+            String newPassword = "";
             while (rst.next()){
-                password = decode(rst.getString("PASSWORD"));
+                newPassword = decode(rst.getString("PASSWORD"));
                 perfilPage = rst.getInt("ID_PERFIL");
             }
 

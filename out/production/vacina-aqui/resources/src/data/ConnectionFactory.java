@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import static infrastructure.GetProperties.getPropertie;
 
 public class ConnectionFactory {
-    public Connection getConection() throws SQLException, IOException {
+    public Connection getConnection() throws SQLException, IOException {
         String url = getPropertie("db.url");
         String user =  getPropertie("db.user");
         String password =  getPropertie("db.password");

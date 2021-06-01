@@ -37,6 +37,8 @@ public class AdministratorsService{
         int charge = option + 1 ;
         try {
             Person person = createPerson(charge);
+            PersonData insert = new PersonData();
+            insert.insertPerson(person);
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
