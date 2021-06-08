@@ -54,8 +54,8 @@ public class Person {
                 };
         Password pwd = new Password();
 
-        String name = JOptionPane.showInputDialog(null, "Digite seu CPF sem caracteres especiais");
-        String cpf = JOptionPane.showInputDialog(null, "Digite seu nome");
+        String cpf = JOptionPane.showInputDialog(null, "Digite seu CPF sem caracteres especiais");
+        String name = JOptionPane.showInputDialog(null, "Digite seu nome");
         String email =  JOptionPane.showInputDialog(null, "Digite seu email");
         String password = pwd.createPassword(email);
         String address = JOptionPane.showInputDialog(null, "Digite seu Endereço");

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 public class PersonData {
 
-    public void insertPerson(Person p) throws SQLException, IOException {
+    public void insertPerson( Person p) throws SQLException, IOException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
@@ -107,38 +107,6 @@ public class PersonData {
         if(linhasModificadas>0){
             JOptionPane.showMessageDialog(null,"Remoção Concluida");
             connection.close();
-        }
-    }
-
-    public void personLogin(String login, String password) {
-        int perfilPage = 0;
-        try {
-            ConnectionFactory connectionFactory = new ConnectionFactory();
-            Connection connection = connectionFactory.getConnection();
-
-            Statement stm = connection.createStatement();
-            stm.execute("SELECT * FROM PEOPLE WHERE CPF = '"+login+"';");
-
-            ResultSet rst = stm.getResultSet();
-            String newPassword = "";
-            while (rst.next()){
-                newPassword = decode(rst.getString("PASSWORD"));
-                perfilPage = rst.getInt("ID_PERFIL");
-            }
-
-            if(password.equals(newPassword)){
-                //abrir a pagina do usuario de acordo com perfilPage
-                JOptionPane.showMessageDialog(null, "sucesso");
-                if(perfilPage == 1){
-                    //retorna pagina de acordo com o perfil
-                    connection.close();
-                    return;
-                }
-                //retorna pagina de acordo com o perfil
-            }
-            connection.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 

@@ -14,6 +14,14 @@ public class AdministratorsService{
 
     String titleMessage = "Escolha a opção desejada";
 
+    Object[] options =
+            { "Cadastrar",
+                    "Remover",
+                    "Gerar relatorio",
+                    "Cancelar"
+            };
+
+
     Object[] registerOptions =
             { "Adiministrador",
                     "Atendente",
@@ -25,6 +33,32 @@ public class AdministratorsService{
             { "Sim",
                 "Não"
             };
+
+    public void administratorsActions(){
+        String optionDialogMessage = "deseja cadastrar, remover ou gerar relatorio?";
+        int option = JOptionPane.showOptionDialog(null, optionDialogMessage, titleMessage, JOptionPane.
+                DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        System.out.println(option);
+
+        switch (option){
+            case 0:
+                this.register();
+                this.administratorsActions();
+                break;
+            case 1:
+                this.remove();
+                this.administratorsActions();
+                break;
+            case 2:
+                this.reportGenerator();
+                this.administratorsActions();
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(null, "cancelando");
+                break;
+        }
+        return;
+    }
 
     public void register ()  {
         String optionDialogMessage = "deseja cadastrar um Paciente, Administrador ou Atendente?";

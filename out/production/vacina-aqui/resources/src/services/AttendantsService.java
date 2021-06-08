@@ -8,6 +8,35 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class AttendantsService {
+    String titleMessage = "Escolha a opção desejada";
+
+    Object[] options =
+            { "Ver Fila",
+                    "Confirmar vacinação",
+                    "Cancelar"
+            };
+
+    public void attendantsActions() throws SQLException, IOException {
+        String optionDialogMessage = "deseja ver a fila de vacinação, confirmar vacinação?";
+        int option = JOptionPane.showOptionDialog(null, optionDialogMessage, titleMessage, JOptionPane.
+                DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        System.out.println(option);
+
+        switch (option){
+            case 0:
+                this.consultQueue();
+                this.attendantsActions();
+                break;
+            case 1:
+                this.vaccineConfirm();
+                this.attendantsActions();
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, "cancelando");
+                break;
+        }
+        return;
+    }
 
     public void consultQueue() throws SQLException, IOException {
         String optionDialogMessage = "Desejava vacinar o primeiro paciente da fila?";
@@ -65,7 +94,8 @@ public class AttendantsService {
         stm.execute();
 
         ResultSet rst = stm.getResultSet();
-        rst.absolute(1);
+        rst.absolute(0);
         rst.updateDate("DATA_DE_VACINACAO", Date.valueOf(date));
+        this.attendantsActions();
     }
 }

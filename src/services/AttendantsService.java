@@ -8,6 +8,35 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class AttendantsService {
+    String titleMessage = "Escolha a opção desejada";
+
+    Object[] options =
+            { "Ver Fila",
+                    "Confirmar vacinação",
+                    "Cancelar"
+            };
+
+    public void attendantsActions() throws SQLException, IOException {
+        String optionDialogMessage = "deseja ver a fila de vacinação, confirmar vacinação?";
+        int option = JOptionPane.showOptionDialog(null, optionDialogMessage, titleMessage, JOptionPane.
+                DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        System.out.println(option);
+
+        switch (option){
+            case 0:
+                this.consultQueue();
+                this.attendantsActions();
+                break;
+            case 1:
+                this.vaccineConfirm();
+                this.attendantsActions();
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, "cancelando");
+                break;
+        }
+        return;
+    }
 
     public void consultQueue() throws SQLException, IOException {
         String optionDialogMessage = "Desejava vacinar o primeiro paciente da fila?";
@@ -55,17 +84,17 @@ public class AttendantsService {
     }
 
     public void vaccineConfirm() throws SQLException, IOException {
-
         LocalDate date = LocalDate.now();
 
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE;");
-        stm.execute();
-
-        ResultSet rst = stm.getResultSet();
-        rst.absolute(1);
-        rst.updateDate("DATA_DE_VACINACAO", Date.valueOf(date));
+        PreparedStatement stm = connection.prepareStatement("UPDATE PEOPLE \n" +
+                "SET DATA_DE_VACINACAO = ? \n" +
+                "WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE " +
+                "LIMIT 1;");
+        stm.setDate(1,Date.valueOf(date));
+        stm.executeUpdate();
+        this.attendantsActions();
     }
 }
