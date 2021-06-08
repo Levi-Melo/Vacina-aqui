@@ -21,7 +21,6 @@ public class Login {
 
             Statement stm = connection.createStatement();
             stm.execute("SELECT * FROM PEOPLE WHERE CPF = '"+cpf+"';");
-
             ResultSet rst = stm.getResultSet();
             String dbPassoword = "";
 

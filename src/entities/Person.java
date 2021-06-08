@@ -42,6 +42,23 @@ public class Person {
 
     }
 
+    public Person(String name, String cpf, int age, String email, String address, int addressNumber, String state, String city, String district, int cep, boolean healthPosition, int priority) {
+        this.name = name;
+        this.cpf = cpf;
+        this.age = age;
+        this.email = email;
+        this.address = address;
+        this.addressNumber = addressNumber;
+        this.state = state;
+        this.city = city;
+        this.district = district;
+        this.cep = cep;
+        this.healthPosition = healthPosition;
+        this.priority = priority;
+        this.profileId = 3;
+        this.password = "";
+    }
+
     public static Person createPerson(int id, int age) throws IOException {
 
         String optionDialogMessage = "O paciente trabalha na área da saúde?";
@@ -69,12 +86,13 @@ public class Person {
         if (id == 3){
             healthPosition = getBoolean(JOptionPane.showOptionDialog(null, optionDialogMessage,
                     titleMessage, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, confirm, confirm[0]));
-        }
-        if(healthPosition){
+            if(healthPosition){
                 priority = 2;
-        }
+            }
         if(age>=70){
             priority = 1;
+            }
+            return new Person(name, cpf, age, email, address, addressNumber, state, city, district, cep, healthPosition, priority);
         }
         String password = pwd.createPassword(email);
         return new Person(name, cpf, age, email, password, address, addressNumber, state, city, district, cep, id, healthPosition, priority);

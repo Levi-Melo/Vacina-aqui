@@ -51,7 +51,7 @@ public class AttendantsService {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO = null order by NIVEL_DE_PRIORIDADE LIMIT 1;");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO = null order by NIVEL_DE_PRIORIDADE LIMIT 10;");
         stm.execute();
 
         ResultSet rst = stm.getResultSet();
@@ -109,6 +109,5 @@ public class AttendantsService {
                 "LIMIT 1;");
         stm.setDate(1,Date.valueOf(date));
         stm.executeUpdate();
-        this.attendantsActions();
     }
 }
