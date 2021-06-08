@@ -120,8 +120,12 @@ public class AdministratorsService{
 
             for (int i=0;i<vacinForAgeRange.length;i++){
                 averages[i] = vacinForAgeRange[i]/diffDays;
-                System.out.println(averages[i]);
             }
+            JOptionPane.showMessageDialog(null,
+                    "Media para mais velhos que 90: "+averages[0]+"\n"+
+                    "Media para os que estão entre 70 e 90: "+averages[1]+"\n"+
+                    "Media para os que estão entre 50 e 70: "+averages[2]+"\n"+
+                    "Media para mais novos que 50: "+averages[3]+"\n");
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

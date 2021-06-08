@@ -21,9 +21,9 @@ public class Person {
     public boolean healthPosition;
     public int priority;
 
-    Person(String name,String cpf,int age,String email,String password, String address,
-           int addressNumber, String state, String city, String district, int cep,
-           int profileId, boolean healthPosition, int priority){
+    public Person(String name, String cpf, int age, String email, String password, String address,
+                  int addressNumber, String state, String city, String district, int cep,
+                  int profileId, boolean healthPosition, int priority){
 
         this.name = name;
         this.cpf = cpf;
@@ -57,7 +57,6 @@ public class Person {
         String cpf = JOptionPane.showInputDialog(null, "Digite seu CPF sem caracteres especiais");
         String name = JOptionPane.showInputDialog(null, "Digite seu nome");
         String email =  JOptionPane.showInputDialog(null, "Digite seu email");
-        String password = pwd.createPassword(email);
         String address = JOptionPane.showInputDialog(null, "Digite seu Endereço");
         int addressNumber = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero do Endereço"));
         String state = JOptionPane.showInputDialog(null, "Digite o estado em que mora");
@@ -73,10 +72,11 @@ public class Person {
         }
         if(healthPosition){
                 priority = 2;
-            }
-            if(age>=70){
-                priority = 1;
-            }
+        }
+        if(age>=70){
+            priority = 1;
+        }
+        String password = pwd.createPassword(email);
         return new Person(name, cpf, age, email, password, address, addressNumber, state, city, district, cep, id, healthPosition, priority);
     }
 

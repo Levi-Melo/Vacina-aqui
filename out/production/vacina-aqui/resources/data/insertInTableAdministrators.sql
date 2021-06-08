@@ -15,6 +15,7 @@ CODIGO,
 DESCRICAO
 )VALUES('P', 'Paciente');
 
+
 INSERT INTO PEOPLE(
 	CPF,
     NOME,

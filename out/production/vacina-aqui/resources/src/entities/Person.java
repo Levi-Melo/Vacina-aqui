@@ -21,9 +21,9 @@ public class Person {
     public boolean healthPosition;
     public int priority;
 
-    Person(String name,String cpf,int age,String email,String password, String address,
-           int addressNumber, String state, String city, String district, int cep,
-           int profileId, boolean healthPosition, int priority){
+    public Person(String name, String cpf, int age, String email, String password, String address,
+                  int addressNumber, String state, String city, String district, int cep,
+                  int profileId, boolean healthPosition, int priority){
 
         this.name = name;
         this.cpf = cpf;
@@ -68,7 +68,6 @@ public class Person {
         int priority = 3;
 
         if (id == 3){
-            //paciente
             healthPosition = getBoolean(JOptionPane.showOptionDialog(null, optionDialogMessage,
                     titleMessage, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, confirm, confirm[0]));
         }

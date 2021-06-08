@@ -1,6 +1,7 @@
 package services;
 
 import data.ConnectionFactory;
+import entities.Person;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -50,12 +51,12 @@ public class AttendantsService {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE;");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO = null order by NIVEL_DE_PRIORIDADE LIMIT 1;");
         stm.execute();
 
         ResultSet rst = stm.getResultSet();
-
-        System.out.println(rst);
+        String[] fila = new String[10];
+        int index = 0;
         while (rst.next()){
             int id = rst.getInt("ID");
             String cpf = rst.getString("CPF");
@@ -71,9 +72,22 @@ public class AttendantsService {
             String data = rst.getString("DATA_DE_VACINACAO");
             boolean healthPosition = rst.getBoolean("CARGO_AREA_PUBLICA");
             int priority = rst.getInt("NIVEL_DE_PRIORIDADE");
-            System.out.println(id + " " + name + " " + cpf +" "+ age + " " + email +" " + address +" " + addressNumber +
-                    " " + state+ " " + district +" " + cep +" " + city +" " + data +" " + healthPosition+ " " +priority);
+            fila[index] = id + " " + name + " " + cpf +" "+ age + " " + email +" " + address +" " + addressNumber +
+                    " " + state+ " " + district +" " + cep +" " + city +" " + data +" " + healthPosition+ " " +priority;
+            index++;
         }
+        JOptionPane.showMessageDialog(null,
+                fila[0]+"\n"+
+                        fila[1]+"\n"+
+                        fila[2]+"\n"+
+                        fila[3]+"\n"+
+                        fila[4]+"\n"+
+                        fila[5]+"\n"+
+                        fila[6]+"\n"+
+                        fila[7]+"\n"+
+                        fila[8]+"\n"+
+                        fila[9]+"\n");
+
         int option = JOptionPane.showOptionDialog(null, optionDialogMessage, titleMessage,
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, confirm, confirm[0]);
 

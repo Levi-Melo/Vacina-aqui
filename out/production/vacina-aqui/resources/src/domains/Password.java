@@ -2,6 +2,9 @@ package domains;
 
 import data.PersonData;
 import services.EmailService;
+
+import javax.swing.*;
+
 import static infrastructure.Cryptography.encode;
 
 import java.io.IOException;
@@ -28,7 +31,8 @@ public class Password {
         String content = "Olá novo funcionário essa é sua para acesso "+password+".\n" +
                 "Não esqueça que seu login é seu cpf, se esquecer é só clicar em redefinir sinha no login.";
 
-        emailServices.sendEmail(email,subject,content);
+//        emailServices.sendEmail(email,subject,content);
+        JOptionPane.showMessageDialog(null, "sua senha é " + password +"!");
 
         return encode(password);
     }
