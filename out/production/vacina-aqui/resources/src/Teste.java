@@ -18,7 +18,6 @@ public class Teste {
 
         String sender = getPropertie("email.user");
         String senderPassword = getPropertie("email.password");
-
         props.put("mail.transport.protocol", "smtp"); //define protocolo de envio como SMTP
         props.put("mail.smtp.starttls.enable","true");
         props.put("mail.smtp.host", "smtp.gmail.com"); //server SMTP do GMAIL

@@ -36,7 +36,12 @@ public class AdministratorsService{
         }
         int charge = option + 1 ;
         try {
-            Person person = createPerson(charge);
+            int age = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite sua idade"));
+            if (age<=0){
+                JOptionPane.showMessageDialog(null,"idade invalida, cancelando operação");
+                return;
+            }
+            Person person = createPerson(charge, age);
             PersonData insert = new PersonData();
             insert.insertPerson(person);
         }

@@ -42,7 +42,7 @@ public class Person {
 
     }
 
-    public static Person createPerson(int id) throws IOException {
+    public static Person createPerson(int id, int age) throws IOException {
 
         String optionDialogMessage = "O paciente trabalha na área da saúde?";
         String titleMessage = "Escolha a opção desejada";
@@ -56,7 +56,6 @@ public class Person {
 
         String name = JOptionPane.showInputDialog(null, "Digite seu CPF sem caracteres especiais");
         String cpf = JOptionPane.showInputDialog(null, "Digite seu nome");
-        int age = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite sua idade"));
         String email =  JOptionPane.showInputDialog(null, "Digite seu email");
         String password = pwd.createPassword(email);
         String address = JOptionPane.showInputDialog(null, "Digite seu Endereço");
@@ -80,7 +79,6 @@ public class Person {
                 priority = 1;
             }
         return new Person(name, cpf, age, email, password, address, addressNumber, state, city, district, cep, id, healthPosition, priority);
-
     }
 
     static Boolean getBoolean(int number){ return number == 0; }
