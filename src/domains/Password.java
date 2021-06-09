@@ -28,11 +28,10 @@ public class Password {
 
         EmailService emailServices = new EmailService();
         String subject = "Senha do seu cadastro no Vacin'aqui!!";
-        String content = "Olá novo funcionário essa é sua para acesso "+password+".\n" +
+        String content = "Olá novo funcionário essa é sua para acesso "+password+" .\n" +
                 "Não esqueça que seu login é seu cpf, se esquecer é só clicar em redefinir sinha no login.";
 
-//        emailServices.sendEmail(email,subject,content);
-        JOptionPane.showMessageDialog(null, "sua senha é " + password +"!");
+        emailServices.sendEmail(email,subject,content);
 
         return encode(password);
     }

@@ -51,7 +51,7 @@ public class AttendantsService {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO = null order by NIVEL_DE_PRIORIDADE LIMIT 10;");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO IS NULL order by NIVEL_DE_PRIORIDADE LIMIT 10;");
         stm.execute();
 
         ResultSet rst = stm.getResultSet();
@@ -69,11 +69,9 @@ public class AttendantsService {
             String city = rst.getString("CIDADE");
             String district = rst.getString("BAIRRO");
             int cep = rst.getInt("CEP");
-            String data = rst.getString("DATA_DE_VACINACAO");
-            boolean healthPosition = rst.getBoolean("CARGO_AREA_PUBLICA");
             int priority = rst.getInt("NIVEL_DE_PRIORIDADE");
-            fila[index] = id + " " + name + " " + cpf +" "+ age + " " + email +" " + address +" " + addressNumber +
-                    " " + state+ " " + district +" " + cep +" " + city +" " + data +" " + healthPosition+ " " +priority;
+            fila[index] = "Id: "+id + "\nNome: " + name + "\ncpf: " + cpf +"\nage: "+ age +"\nEmail: " + email +"\nLogradouro: " + address + "\nNumero de Endereço: " + addressNumber +
+                    "\nEstado: " + state+ "\nBairro: " + district + "\nCEP: " + cep +"\nCidade: " + city + "\nNivel de Prioridade: " +priority;
             index++;
         }
         JOptionPane.showMessageDialog(null,
@@ -105,7 +103,7 @@ public class AttendantsService {
 
         PreparedStatement stm = connection.prepareStatement("UPDATE PEOPLE \n" +
                 "SET DATA_DE_VACINACAO = ? \n" +
-                "WHERE ID_PERFIL = 3 order by NIVEL_DE_PRIORIDADE " +
+                "WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO IS NULL order by NIVEL_DE_PRIORIDADE " +
                 "LIMIT 1;");
         stm.setDate(1,Date.valueOf(date));
         stm.executeUpdate();

@@ -71,10 +71,10 @@ public class Person {
                 };
         Password pwd = new Password();
 
-        String cpf = JOptionPane.showInputDialog(null, "Digite seu CPF sem caracteres especiais");
-        String name = JOptionPane.showInputDialog(null, "Digite seu nome");
-        String email =  JOptionPane.showInputDialog(null, "Digite seu email");
-        String address = JOptionPane.showInputDialog(null, "Digite seu Endereço");
+        String cpf = JOptionPane.showInputDialog(null, "Digite o CPF para cadastro sem caracteres especiais");
+        String name = JOptionPane.showInputDialog(null, "Digite o nome para cadastro");
+        String email =  JOptionPane.showInputDialog(null, "Digite o email para cadastro");
+        String address = JOptionPane.showInputDialog(null, "Digite o logradouro para cadastro");
         int addressNumber = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero do Endereço"));
         String state = JOptionPane.showInputDialog(null, "Digite o estado em que mora");
         String city = JOptionPane.showInputDialog(null, "Digite a cidade em que mora");

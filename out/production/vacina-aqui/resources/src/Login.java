@@ -2,49 +2,60 @@ import data.ConnectionFactory;
 import services.AdministratorsService;
 import services.AttendantsService;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Properties;
 
 import static infrastructure.Cryptography.decode;
+import static infrastructure.GetProperties.getPropertie;
 
 public class Login {
-    public static void main(String[] args) {
-        int perfilPage = 0;
+    public static void main(String[] args) throws IOException {
+        Properties props = new Properties();
+
+        String sender = getPropertie("email.user");
+        String senderPassword = "kbosbpkiindqfxkd";
+
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+
+        Session session = Session.getDefaultInstance(props,
+                new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication()
+                    {
+                        return new PasswordAuthentication(sender,
+                                senderPassword);
+                    }
+                });
+
+
+        session.setDebug(true);
+
         try {
-            ConnectionFactory connectionFactory = new ConnectionFactory();
-            Connection connection = connectionFactory.getConnection();
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(sender));
+            //Remetente
 
-            String cpf = JOptionPane.showInputDialog(null, "Digite seu CPF para ter acesso ao sistema");
-            String password =  JOptionPane.showInputDialog(null, "Digite sua senha");
+            Address[] toUser = InternetAddress //Destinatário(s)
+                    .parse("levi.melo@outlook.com.br");
 
-            Statement stm = connection.createStatement();
-            stm.execute("SELECT * FROM PEOPLE WHERE CPF = '"+cpf+"';");
-            ResultSet rst = stm.getResultSet();
-            String dbPassoword = "";
+            message.setRecipients(Message.RecipientType.TO, toUser);
+            message.setSubject("subject");//subject
+            message.setText("content");
+            Transport.send(message);
 
-            while (rst.next()){
-                dbPassoword = decode(rst.getString("PASSWORD"));
-                perfilPage = rst.getInt("ID_PERFIL");
-            }
+            System.out.println("Feito!!!");
 
-            if(password.equals(dbPassoword)){
-                //abrir a pagina do usuario de acordo com perfilPage
-                JOptionPane.showMessageDialog(null, "sucesso");
-                if(perfilPage == 1){
-                    //retorna pagina de acordo com o perfil
-                    AdministratorsService admOptions = new AdministratorsService();
-                    admOptions.administratorsActions();
-                    connection.close();
-                    return;
-                }
-                //retorna pagina de acordo com o perfil
-                AttendantsService attOptions = new AttendantsService();
-                attOptions.attendantsActions();
-            }
-            connection.close();
-        } catch (Exception e) {
+        } catch (MessagingException  e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }

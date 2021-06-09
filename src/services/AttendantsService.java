@@ -69,11 +69,9 @@ public class AttendantsService {
             String city = rst.getString("CIDADE");
             String district = rst.getString("BAIRRO");
             int cep = rst.getInt("CEP");
-            String data = rst.getString("DATA_DE_VACINACAO");
-            boolean healthPosition = rst.getBoolean("CARGO_AREA_PUBLICA");
             int priority = rst.getInt("NIVEL_DE_PRIORIDADE");
-            fila[index] = id + " " + name + " " + cpf +" "+ age + " " + email +" " + address +" " + addressNumber +
-                    " " + state+ " " + district +" " + cep +" " + city +" " + data +" " + healthPosition+ " " +priority;
+            fila[index] = "Id: "+id + "\nNome: " + name + "\ncpf: " + cpf +"\nage: "+ age +"\nEmail: " + email +"\nLogradouro: " + address + "\nNumero de Endereço: " + addressNumber +
+                    "\nEstado: " + state+ "\nBairro: " + district + "\nCEP: " + cep +"\nCidade: " + city + "\nNivel de Prioridade: " +priority;
             index++;
         }
         JOptionPane.showMessageDialog(null,
