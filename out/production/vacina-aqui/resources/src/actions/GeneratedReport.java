@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client.atend;
+package actions;
 
-import client.Login;
-import services.AttendantsService;
+import client.admin.AdminOptions;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
@@ -19,12 +16,12 @@ import javax.swing.border.Border;
  *
  * @author whala
  */
-public class AttOptions extends JFrame {
+class Admin_Relatorio extends javax.swing.JFrame {
 
     /**
-     * Creates new form Login_Atendente
+     * Creates new form Admin_Relatorio
      */
-    public AttOptions() {
+    public Admin_Relatorio() {
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -36,8 +33,6 @@ public class AttOptions extends JFrame {
         jLabel_minimize.setBorder(label_border);
         jLabel_fechar.setBorder(label_border);
         
-        
-                
         Border jLabel_sair_border = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray);
         jLabel_Sair.setBorder(jLabel_sair_border);
     }
@@ -54,9 +49,9 @@ public class AttOptions extends JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton_Fila = new javax.swing.JButton();
-        jButton_Confirmar_Vacinacao = new javax.swing.JButton();
         jLabel_Sair = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         jLabel_minimize = new javax.swing.JLabel();
         jLabel_fechar = new javax.swing.JLabel();
         jPanel_title = new javax.swing.JPanel();
@@ -66,54 +61,9 @@ public class AttOptions extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
-        jPanel2.setBackground(new Color(255, 255, 255));
-
-        jButton_Fila.setBackground(new Color(0, 84, 140));
-        jButton_Fila.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
-        jButton_Fila.setForeground(new Color(255, 255, 255));
-        jButton_Fila.setText("Fila");
-        jButton_Fila.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton_Fila.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton_FilaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton_FilaMouseExited(evt);
-            }
-        });
-        jButton_Fila.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_FilaActionPerformed(evt);
-            }
-        });
-
-        jButton_Confirmar_Vacinacao.setBackground(new Color(0, 84, 140));
-        jButton_Confirmar_Vacinacao.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
-        jButton_Confirmar_Vacinacao.setForeground(new Color(255, 255, 255));
-        jButton_Confirmar_Vacinacao.setText("Confirmar Vacinação");
-        jButton_Confirmar_Vacinacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton_Confirmar_Vacinacao.setPreferredSize(new java.awt.Dimension(111, 29));
-        jButton_Confirmar_Vacinacao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton_Confirmar_VacinacaoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton_Confirmar_VacinacaoMouseExited(evt);
-            }
-        });
-        jButton_Confirmar_Vacinacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    jButton_Confirmar_VacinacaoActionPerformed(evt);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel_Sair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel_Sair.setText("Sair");
@@ -130,32 +80,37 @@ public class AttOptions extends JFrame {
             }
         });
 
+        jList1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Media para mais velhos que 90: \"+averages[0]+\"\\n",
+                "Media para os que estão entre 70 e 90: \"+averages[1]+\"\\n",
+                "Media para os que estão entre 50 e 70: \"+averages[2]+",
+                "Media para mais novos que 50: \"+averages[3]+"};
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton_Fila, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_Confirmar_Vacinacao, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(257, 257, 257)
-                        .addComponent(jLabel_Sair)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addGap(226, 226, 226)
+                .addComponent(jLabel_Sair)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jButton_Fila, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton_Confirmar_Vacinacao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(jLabel_Sair)
-                .addContainerGap())
+                .addContainerGap(62, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
+                .addComponent(jLabel_Sair))
         );
 
         jLabel_minimize.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -188,27 +143,27 @@ public class AttOptions extends JFrame {
             }
         });
 
-        jPanel_title.setBackground(new Color(204, 255, 204));
+        jPanel_title.setBackground(new java.awt.Color(204, 255, 204));
 
-        jLabel3.setBackground(new Color(255, 255, 255));
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel3.setText("Atendente");
+        jLabel3.setText("Gerar Relatório");
 
         javax.swing.GroupLayout jPanel_titleLayout = new javax.swing.GroupLayout(jPanel_title);
         jPanel_title.setLayout(jPanel_titleLayout);
         jPanel_titleLayout.setHorizontalGroup(
             jPanel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_titleLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel3)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel_titleLayout.setVerticalGroup(
             jPanel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_titleLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel3)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -217,10 +172,10 @@ public class AttOptions extends JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addGap(47, 47, 47)
                 .addComponent(jPanel_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(137, 137, 137)
+                .addGap(75, 75, 75)
                 .addComponent(jLabel_minimize, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,22 +228,8 @@ public class AttOptions extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_FilaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_FilaMouseEntered
-
-        jButton_Fila.setBackground(new Color(0, 101, 183));
-    }//GEN-LAST:event_jButton_FilaMouseEntered
-
-    private void jButton_FilaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_FilaMouseExited
-
-        jButton_Fila.setBackground(new Color(0, 84, 104));
-    }//GEN-LAST:event_jButton_FilaMouseExited
-
-    private void jButton_FilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FilaActionPerformed
-
-    }//GEN-LAST:event_jButton_FilaActionPerformed
-
     private void jLabel_SairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseClicked
-        Login logoff = new Login();
+        AdminOptions logoff = new AdminOptions();
         logoff.setVisible(true);
         logoff.pack();
         logoff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -343,19 +284,6 @@ public class AttOptions extends JFrame {
         jLabel_fechar.setForeground(Color.black);
     }//GEN-LAST:event_jLabel_fecharMouseExited
 
-    private void jButton_Confirmar_VacinacaoActionPerformed(java.awt.event.ActionEvent evt) throws SQLException, IOException {//GEN-FIRST:event_jButton_Confirmar_VacinacaoActionPerformed
-        AttendantsService vacine = new AttendantsService();
-        vacine.vaccineConfirm();
-    }//GEN-LAST:event_jButton_Confirmar_VacinacaoActionPerformed
-
-    private void jButton_Confirmar_VacinacaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_Confirmar_VacinacaoMouseExited
-        jButton_Confirmar_Vacinacao.setBackground(new Color(0, 84, 104));
-    }//GEN-LAST:event_jButton_Confirmar_VacinacaoMouseExited
-
-    private void jButton_Confirmar_VacinacaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_Confirmar_VacinacaoMouseEntered
-        jButton_Confirmar_Vacinacao.setBackground(new Color(0, 101, 183));
-    }//GEN-LAST:event_jButton_Confirmar_VacinacaoMouseEntered
-
     /**
      * @param args the command line arguments
      */
@@ -373,35 +301,35 @@ public class AttOptions extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AttOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AttOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AttOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AttOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AttOptions().setVisible(true);
+                new Admin_Relatorio().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_Confirmar_Vacinacao;
-    private javax.swing.JButton jButton_Fila;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel_Sair;
     private javax.swing.JLabel jLabel_fechar;
     private javax.swing.JLabel jLabel_logo;
     private javax.swing.JLabel jLabel_minimize;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel_title;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

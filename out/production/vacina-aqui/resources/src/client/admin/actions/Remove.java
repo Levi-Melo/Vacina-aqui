@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client.atend;
+package client.admin.actions;
 
-import client.Login;
-import services.AttendantsService;
+import client.admin.AdminOptions;
+import data.PersonData;
+import entities.Person;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.sql.SQLException;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 /**
  *
  * @author whala
  */
-public class AttOptions extends JFrame {
+public class Remove extends JFrame {
 
     /**
-     * Creates new form Login_Atendente
+     * Creates new form Admin_Remover
      */
-    public AttOptions() {
+    public Remove() {
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -36,8 +36,6 @@ public class AttOptions extends JFrame {
         jLabel_minimize.setBorder(label_border);
         jLabel_fechar.setBorder(label_border);
         
-        
-                
         Border jLabel_sair_border = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray);
         jLabel_Sair.setBorder(jLabel_sair_border);
     }
@@ -54,8 +52,9 @@ public class AttOptions extends JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton_Fila = new javax.swing.JButton();
-        jButton_Confirmar_Vacinacao = new javax.swing.JButton();
+        jTextField_CPF = new javax.swing.JTextField();
+        jButton_Remover = new javax.swing.JButton();
+        jLabel_CPF = new javax.swing.JLabel();
         jLabel_Sair = new javax.swing.JLabel();
         jLabel_minimize = new javax.swing.JLabel();
         jLabel_fechar = new javax.swing.JLabel();
@@ -70,50 +69,44 @@ public class AttOptions extends JFrame {
 
         jPanel2.setBackground(new Color(255, 255, 255));
 
-        jButton_Fila.setBackground(new Color(0, 84, 140));
-        jButton_Fila.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
-        jButton_Fila.setForeground(new Color(255, 255, 255));
-        jButton_Fila.setText("Fila");
-        jButton_Fila.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton_Fila.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton_FilaMouseEntered(evt);
+        jTextField_CPF.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jTextField_CPF.setForeground(new Color(153, 153, 153));
+        jTextField_CPF.setText("CPF sem caracteres especiais");
+        jTextField_CPF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_CPFFocusGained(evt);
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton_FilaMouseExited(evt);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_CPFFocusLost(evt);
             }
         });
-        jButton_Fila.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_CPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_FilaActionPerformed(evt);
+                jTextField_CPFActionPerformed(evt);
             }
         });
 
-        jButton_Confirmar_Vacinacao.setBackground(new Color(0, 84, 140));
-        jButton_Confirmar_Vacinacao.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
-        jButton_Confirmar_Vacinacao.setForeground(new Color(255, 255, 255));
-        jButton_Confirmar_Vacinacao.setText("Confirmar Vacinação");
-        jButton_Confirmar_Vacinacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton_Confirmar_Vacinacao.setPreferredSize(new java.awt.Dimension(111, 29));
-        jButton_Confirmar_Vacinacao.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButton_Remover.setBackground(new Color(0, 84, 140));
+        jButton_Remover.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
+        jButton_Remover.setForeground(new Color(255, 255, 255));
+        jButton_Remover.setText("Remover");
+        jButton_Remover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton_Remover.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton_Confirmar_VacinacaoMouseEntered(evt);
+                jButton_RemoverMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButton_Confirmar_VacinacaoMouseExited(evt);
+                jButton_RemoverMouseExited(evt);
             }
         });
-        jButton_Confirmar_Vacinacao.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Remover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    jButton_Confirmar_VacinacaoActionPerformed(evt);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                jButton_RemoverActionPerformed(evt);
             }
         });
+
+        jLabel_CPF.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel_CPF.setText("CPF:");
 
         jLabel_Sair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel_Sair.setText("Sair");
@@ -135,27 +128,30 @@ public class AttOptions extends JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton_Fila, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_Confirmar_Vacinacao, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(257, 257, 257)
-                        .addComponent(jLabel_Sair)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                        .addComponent(jLabel_CPF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jTextField_CPF))
+                    .addComponent(jButton_Remover, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(45, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(211, 211, 211)
+                .addComponent(jLabel_Sair)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jButton_Fila, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton_Confirmar_Vacinacao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(jLabel_Sair)
-                .addContainerGap())
+                .addGap(68, 68, 68)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_CPF, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_CPF, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addComponent(jButton_Remover, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(jLabel_Sair))
         );
 
         jLabel_minimize.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -192,23 +188,23 @@ public class AttOptions extends JFrame {
 
         jLabel3.setBackground(new Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel3.setText("Atendente");
+        jLabel3.setText("Remoção");
 
         javax.swing.GroupLayout jPanel_titleLayout = new javax.swing.GroupLayout(jPanel_title);
         jPanel_title.setLayout(jPanel_titleLayout);
         jPanel_titleLayout.setHorizontalGroup(
             jPanel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_titleLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(49, 49, 49)
                 .addComponent(jLabel3)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel_titleLayout.setVerticalGroup(
             jPanel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_titleLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_titleLayout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -217,10 +213,10 @@ public class AttOptions extends JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addComponent(jPanel_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(137, 137, 137)
+                .addGap(89, 89, 89)
                 .addComponent(jLabel_minimize, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,41 +269,51 @@ public class AttOptions extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton_FilaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_FilaMouseEntered
+    private void jTextField_CPFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_CPFFocusGained
 
-        jButton_Fila.setBackground(new Color(0, 101, 183));
-    }//GEN-LAST:event_jButton_FilaMouseEntered
+        if(jTextField_CPF.getText().trim().toLowerCase().equals("cpf sem caracteres especiais")) {
+            jTextField_CPF.setText("");
+            jTextField_CPF.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_jTextField_CPFFocusGained
 
-    private void jButton_FilaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_FilaMouseExited
+    private void jTextField_CPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_CPFFocusLost
 
-        jButton_Fila.setBackground(new Color(0, 84, 104));
-    }//GEN-LAST:event_jButton_FilaMouseExited
+        if(jTextField_CPF.getText().trim().equals("") ||
+            jTextField_CPF.getText().trim().toLowerCase().equals("cpf sem caracteres especiais")) {
+            jTextField_CPF.setText("cpf sem caracteres especiais");
+            jTextField_CPF.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_jTextField_CPFFocusLost
 
-    private void jButton_FilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FilaActionPerformed
+    private void jButton_RemoverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_RemoverMouseEntered
 
-    }//GEN-LAST:event_jButton_FilaActionPerformed
+        jButton_Remover.setBackground(new Color(0, 101, 183));
 
-    private void jLabel_SairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseClicked
-        Login logoff = new Login();
-        logoff.setVisible(true);
-        logoff.pack();
-        logoff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
-    }//GEN-LAST:event_jLabel_SairMouseClicked
+    }//GEN-LAST:event_jButton_RemoverMouseEntered
 
-    private void jLabel_SairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseEntered
-        Border jLabel_sair_border = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(0, 101, 183));
-        jLabel_Sair.setBorder(jLabel_sair_border);
-    }//GEN-LAST:event_jLabel_SairMouseEntered
+    private void jButton_RemoverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_RemoverMouseExited
 
-    private void jLabel_SairMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseExited
-        Border jLabel_sair_border = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray);
-        jLabel_Sair.setBorder(jLabel_sair_border);
-    }//GEN-LAST:event_jLabel_SairMouseExited
+        jButton_Remover.setBackground(new Color(0, 84, 104));
+
+    }//GEN-LAST:event_jButton_RemoverMouseExited
+
+    private void jButton_RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RemoverActionPerformed
+        String cpf = jTextField_CPF.getText();
+        PersonData rmv = new PersonData();
+        try {
+            rmv.removePerson(cpf);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null,"Cpf invalido");
+        }
+    }//GEN-LAST:event_jButton_RemoverActionPerformed
 
     private void jLabel_minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_minimizeMouseClicked
 
         this.setState(JFrame.ICONIFIED);
+
     }//GEN-LAST:event_jLabel_minimizeMouseClicked
 
     private void jLabel_minimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_minimizeMouseEntered
@@ -327,6 +333,7 @@ public class AttOptions extends JFrame {
     private void jLabel_fecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_fecharMouseClicked
 
         System.exit(0);
+
     }//GEN-LAST:event_jLabel_fecharMouseClicked
 
     private void jLabel_fecharMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_fecharMouseEntered
@@ -343,18 +350,27 @@ public class AttOptions extends JFrame {
         jLabel_fechar.setForeground(Color.black);
     }//GEN-LAST:event_jLabel_fecharMouseExited
 
-    private void jButton_Confirmar_VacinacaoActionPerformed(java.awt.event.ActionEvent evt) throws SQLException, IOException {//GEN-FIRST:event_jButton_Confirmar_VacinacaoActionPerformed
-        AttendantsService vacine = new AttendantsService();
-        vacine.vaccineConfirm();
-    }//GEN-LAST:event_jButton_Confirmar_VacinacaoActionPerformed
+    private void jTextField_CPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_CPFActionPerformed
+        
+    }//GEN-LAST:event_jTextField_CPFActionPerformed
 
-    private void jButton_Confirmar_VacinacaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_Confirmar_VacinacaoMouseExited
-        jButton_Confirmar_Vacinacao.setBackground(new Color(0, 84, 104));
-    }//GEN-LAST:event_jButton_Confirmar_VacinacaoMouseExited
+    private void jLabel_SairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseEntered
+        Border jLabel_sair_border = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(0, 101, 183));
+        jLabel_Sair.setBorder(jLabel_sair_border);
+    }//GEN-LAST:event_jLabel_SairMouseEntered
 
-    private void jButton_Confirmar_VacinacaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_Confirmar_VacinacaoMouseEntered
-        jButton_Confirmar_Vacinacao.setBackground(new Color(0, 101, 183));
-    }//GEN-LAST:event_jButton_Confirmar_VacinacaoMouseEntered
+    private void jLabel_SairMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseExited
+        Border jLabel_sair_border = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray);
+        jLabel_Sair.setBorder(jLabel_sair_border);
+    }//GEN-LAST:event_jLabel_SairMouseExited
+
+    private void jLabel_SairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseClicked
+        AdminOptions logoff = new AdminOptions();
+        logoff.setVisible(true);
+        logoff.pack();
+        logoff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_jLabel_SairMouseClicked
 
     /**
      * @param args the command line arguments
@@ -373,28 +389,28 @@ public class AttOptions extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AttOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Remove.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AttOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Remove.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AttOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Remove.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AttOptions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Remove.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AttOptions().setVisible(true);
+                new Remove().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_Confirmar_Vacinacao;
-    private javax.swing.JButton jButton_Fila;
+    private javax.swing.JButton jButton_Remover;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel_CPF;
     private javax.swing.JLabel jLabel_Sair;
     private javax.swing.JLabel jLabel_fechar;
     private javax.swing.JLabel jLabel_logo;
@@ -403,5 +419,6 @@ public class AttOptions extends JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel_title;
+    private javax.swing.JTextField jTextField_CPF;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,7 +3,6 @@ package services;
 import data.ConnectionFactory;
 import entities.Person;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -22,7 +21,7 @@ public class AttendantsService {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO IS NULL order by NIVEL_DE_PRIORIDADE;");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE;");
         stm.execute();
 
         ResultSet rst = stm.getResultSet();
@@ -62,6 +61,5 @@ public class AttendantsService {
                 "LIMIT 1;");
         stm.setDate(1,Date.valueOf(date));
         stm.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Vacina confirmada");
     }
 }
