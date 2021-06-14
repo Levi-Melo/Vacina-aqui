@@ -1,6 +1,9 @@
 package data;
 
 import entities.Person;
+import services.AdministratorsService;
+import services.AttendantsService;
+
 import static infrastructure.Cryptography.decode;
 
 import javax.swing.*;
@@ -64,6 +67,7 @@ public class PersonData {
         String cpf;
         String email;
         String name;
+        int perfil =0;
         int age;
 
         Object[] remove =
@@ -88,10 +92,14 @@ public class PersonData {
              name = rst.getString("NOME");
              age = rst.getInt("IDADE");
              email = rst.getString("EMAIL");
+             perfil = rst.getInt("ID_PERFIL");
              String perfilprofile = rst.getString("DESCRICAO");
              pessoa =  name + "\n "+ perfilprofile+"\n " + email + "\n" + cpf +" \n"+ age ;
         }
-
+        if(perfil==3){
+            JOptionPane.showMessageDialog(null, "Você não pode remover um paciente");
+            return;
+        }
         int confirm = JOptionPane.showOptionDialog(null, pessoa, titleMessage, JOptionPane.
                 DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, remove, remove[0]);
         if(confirm == 1){
@@ -166,5 +174,33 @@ public class PersonData {
         return vacinForAgeRange;
     }
 
+    public int loginAutentication(String cpf, String password){
+        int perfilId = 0;
+        try {
+            ConnectionFactory connectionFactory = new ConnectionFactory();
+            Connection connection = connectionFactory.getConnection();
+
+
+            Statement stm = connection.createStatement();
+            stm.execute("SELECT * FROM PEOPLE WHERE CPF = '"+cpf+"';");
+            ResultSet rst = stm.getResultSet();
+            String dbPassoword = "";
+
+            while (rst.next()){
+                dbPassoword = decode(rst.getString("PASSWORD"));
+                perfilId = rst.getInt("ID_PERFIL");
+            }
+
+            if(password.equals(dbPassoword)){
+                connection.close();
+                return perfilId;
+            }
+            connection.close();
+            return 0;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return 0;
+        }
+    }
 }
 

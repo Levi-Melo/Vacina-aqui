@@ -1,8 +1,4 @@
 package entities;
-import domains.Password;
-
-import javax.swing.*;
-import java.io.IOException;
 
 
 public class Person {
@@ -20,6 +16,7 @@ public class Person {
     public int profileId;
     public boolean healthPosition;
     public int priority;
+    public int id;
 
     public Person(String name, String cpf, int age, String email, String password, String address,
                   int addressNumber, String state, String city, String district, int cep,
@@ -58,46 +55,16 @@ public class Person {
         this.profileId = 3;
         this.password = "";
     }
-
-    public static Person createPerson(int id, int age) throws IOException {
-
-        String optionDialogMessage = "O paciente trabalha na área da saúde?";
-        String titleMessage = "Escolha a opção desejada";
-
-
-        Object[] confirm =
-                { "Sim",
-                        "Não"
-                };
-        Password pwd = new Password();
-
-        String cpf = JOptionPane.showInputDialog(null, "Digite o CPF para cadastro sem caracteres especiais");
-        String name = JOptionPane.showInputDialog(null, "Digite o nome para cadastro");
-        String email =  JOptionPane.showInputDialog(null, "Digite o email para cadastro");
-        String address = JOptionPane.showInputDialog(null, "Digite o logradouro para cadastro");
-        int addressNumber = Integer.parseInt(JOptionPane.showInputDialog(null, "Numero do Endereço"));
-        String state = JOptionPane.showInputDialog(null, "Digite o estado em que mora");
-        String city = JOptionPane.showInputDialog(null, "Digite a cidade em que mora");
-        String district = JOptionPane.showInputDialog(null, "Digite o bairro em que mora");
-        int cep = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite seu cep apenas com numeros"));
-        boolean healthPosition = false;
-        int priority = 3;
-
-        if (id == 3){
-            healthPosition = getBoolean(JOptionPane.showOptionDialog(null, optionDialogMessage,
-                    titleMessage, JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, confirm, confirm[0]));
-            if(healthPosition){
-                priority = 2;
-            }
-        if(age>=70){
-            priority = 1;
-            }
-            return new Person(name, cpf, age, email, address, addressNumber, state, city, district, cep, healthPosition, priority);
-        }
-        String password = pwd.createPassword(email);
-        return new Person(name, cpf, age, email, password, address, addressNumber, state, city, district, cep, id, healthPosition, priority);
+    public Person(int id, String name, String cpf, int age, String state, String city, int priority) {
+        this.id = id;
+        this.name = name;
+        this.cpf = cpf;
+        this.age = age;
+        this.state = state;
+        this.city = city;
+        this.priority = priority;
     }
 
-    static Boolean getBoolean(int number){ return number == 0; }
+
 }
 

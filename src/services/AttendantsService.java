@@ -3,10 +3,10 @@ package services;
 import data.ConnectionFactory;
 import entities.Person;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class AttendantsService {
     String titleMessage = "Escolha a opção desejada";
@@ -17,82 +17,36 @@ public class AttendantsService {
                     "Cancelar"
             };
 
-    public void attendantsActions() throws SQLException, IOException {
-        String optionDialogMessage = "deseja ver a fila de vacinação, confirmar vacinação?";
-        int option = JOptionPane.showOptionDialog(null, optionDialogMessage, titleMessage, JOptionPane.
-                DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-        System.out.println(option);
-
-        switch (option){
-            case 0:
-                this.consultQueue();
-                this.attendantsActions();
-                break;
-            case 1:
-                this.vaccineConfirm();
-                this.attendantsActions();
-                break;
-            case 2:
-                JOptionPane.showMessageDialog(null, "cancelando");
-                break;
-        }
-        return;
-    }
-
-    public void consultQueue() throws SQLException, IOException {
-        String optionDialogMessage = "Desejava vacinar o primeiro paciente da fila?";
-        String titleMessage = "Escolha a opção desejada";
-
-        Object[] confirm =
-                { "Sim",
-                        "Não"
-                };
-
+    public Object[][] consultQueue() throws SQLException, IOException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO IS NULL order by NIVEL_DE_PRIORIDADE LIMIT 10;");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE;");
         stm.execute();
 
         ResultSet rst = stm.getResultSet();
-        String[] fila = new String[10];
-        int index = 0;
+        ArrayList<Person> fila = new ArrayList<>();
         while (rst.next()){
             int id = rst.getInt("ID");
             String cpf = rst.getString("CPF");
             String name = rst.getString("NOME");
             int age = rst.getInt("IDADE");
-            String email = rst.getString("EMAIL");
-            String address = rst.getString("ENDERECO");
-            String addressNumber = rst.getString("NUMERO");
             String state = rst.getString("ESTADO");
             String city = rst.getString("CIDADE");
-            String district = rst.getString("BAIRRO");
-            int cep = rst.getInt("CEP");
             int priority = rst.getInt("NIVEL_DE_PRIORIDADE");
-            fila[index] = "Id: "+id + "\nNome: " + name + "\ncpf: " + cpf +"\nage: "+ age +"\nEmail: " + email +"\nLogradouro: " + address + "\nNumero de Endereço: " + addressNumber +
-                    "\nEstado: " + state+ "\nBairro: " + district + "\nCEP: " + cep +"\nCidade: " + city + "\nNivel de Prioridade: " +priority;
-            index++;
+            fila.add(new Person(id ,name, cpf, age, state , city ,priority));
         }
-        JOptionPane.showMessageDialog(null,
-                fila[0]+"\n"+
-                        fila[1]+"\n"+
-                        fila[2]+"\n"+
-                        fila[3]+"\n"+
-                        fila[4]+"\n"+
-                        fila[5]+"\n"+
-                        fila[6]+"\n"+
-                        fila[7]+"\n"+
-                        fila[8]+"\n"+
-                        fila[9]+"\n");
-
-        int option = JOptionPane.showOptionDialog(null, optionDialogMessage, titleMessage,
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, confirm, confirm[0]);
-
-        if (option==0){
-            vaccineConfirm();
+        Object dados [][] = new Object[fila.size()][7];
+        for(int i = 0; i<fila.size(); i++){
+            dados[i][0] = fila.get(i).id;
+            dados[i][1] = fila.get(i).name;
+            dados[i][2] = fila.get(i).cpf;
+            dados[i][3] = fila.get(i).age;
+            dados[i][4] = fila.get(i).city;
+            dados[i][5] = fila.get(i).state;
+            dados[i][6] = fila.get(i).priority;
         }
-        connection.close();
+    return dados;
     }
 
     public void vaccineConfirm() throws SQLException, IOException {
