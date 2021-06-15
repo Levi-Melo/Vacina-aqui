@@ -4,9 +4,6 @@
  <br />
   <p align="center">
    Project for the Computing Solutions Programming and Software Modeling classes
-       <br />
-    <br />
-    Back-end developed by <a href="https://www.linkedin.com/in/levi-melo-dos-santos-5277441a1//">Levi Melo dos Santos</a>
   </p>
 </p>
 
@@ -17,14 +14,14 @@
 * [Techs](#Used-Techs)
 
 # Team
-- <a href="https://www.linkedin.com/in/ariadne-braga-5618531ab/" >Ariadne Braga</a> - RA: 820142810
-- <a href="https://www.linkedin.com/in/igor-cosmo-57a9191a2/" >Igor cosmo costa</a> - RA: 820150105
-- João Victor Dabus Spiwak da Silva - RA: 820150636
-- <a href="https://www.linkedin.com/in/levi-melo-dos-santos-5277441a1//">Levi Melo dos Santos</a> - RA: 820140945
-- <a href="https://www.linkedin.com/in/lucas-almeida-rocha-7323551a4/">Lucas Almeida Rocha</a> - RA: 820290346
-- <a href="https://www.linkedin.com/in/lucasgomesc/">Lucas Gomes de Carvalho</a> - RA: 820151785
-- Matheus Patrício - RA: 820134204
-- <a href="https://www.linkedin.com/in/victor-landim-37b102169/">Victor Landim </a>- RA: 820146087
+- <a href="https://www.linkedin.com/in/ariadne-braga-5618531ab/" >Ariadne Braga</a> - RA: 820142810 (Documentation)
+- <a href="https://www.linkedin.com/in/igor-cosmo-57a9191a2/" >Igor cosmo costa</a> - RA: 820150105 (Documentation)
+- João Victor Dabus Spiwak da Silva - RA: 820150636 (Documentation)
+- <a href="https://www.linkedin.com/in/levi-melo-dos-santos-5277441a1//">Levi Melo dos Santos</a> - RA: 820140945 (Documentation, Front-End and Back-End)
+- <a href="https://www.linkedin.com/in/lucas-almeida-rocha-7323551a4/">Lucas Almeida Rocha</a> - RA: 820290346 (Documentation, Front-End and Animation)
+- <a href="https://www.linkedin.com/in/lucasgomesc/">Lucas Gomes de Carvalho</a> - RA: 820151785 (Documentation)
+- Matheus Patrício - RA: 820134204 (Documentation)
+- <a href="https://www.linkedin.com/in/victor-landim-37b102169/">Victor Landim </a>- RA: 820146087 (Documentation)
 
 
 # Proposal
@@ -63,3 +60,12 @@ Our challenge is to create a software for the management of employees and the va
 - mysql-connector-java-8.0.17.jar
 - activation-1.1.1.jar
 - javax.mail.jar
+
+# Getting Started
+
+- In vacina-aqui/resources/config.properties you need to set your environment variables in base64, you can use the following sites:
+ - https://www.base64encode.org/
+ - https://www.base64decode.org/
+
+- The first registration needs to be done by mysql also using a base 64 string for the password field from then on new registrations will receive their passwords by email
+

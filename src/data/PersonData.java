@@ -131,12 +131,8 @@ public class PersonData {
 
         stm.execute();
         int modifiedLines = stm.getUpdateCount();
-
-        ResultSet rst = stm.getGeneratedKeys();
-        while (rst.next()){
             if (modifiedLines>0){
                 JOptionPane.showMessageDialog(null, "sucesso");
-            }
         }
         connection.close();
 

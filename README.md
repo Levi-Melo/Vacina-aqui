@@ -60,3 +60,12 @@ Our challenge is to create a software for the management of employees and the va
 - mysql-connector-java-8.0.17.jar
 - activation-1.1.1.jar
 - javax.mail.jar
+
+# Getting Started
+
+- In vacina-aqui/resources/config.properties you need to set your environment variables in base64, you can use the following sites:
+ - https://www.base64encode.org/
+ - https://www.base64decode.org/
+
+- The first registration needs to be done by mysql also using a base 64 string for the password field from then on new registrations will receive their passwords by email
+

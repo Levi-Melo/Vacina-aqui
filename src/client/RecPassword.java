@@ -3,25 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package actions;
+package client;
 
-import client.admin.AdminOptions;
+import domains.Password;
 
 import java.awt.Color;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 /**
  *
  * @author whala
  */
-class Admin_Relatorio extends javax.swing.JFrame {
+public class RecPassword extends JFrame {
 
     /**
-     * Creates new form Admin_Relatorio
+     * Creates new form Recuperar_Senha
      */
-    public Admin_Relatorio() {
+    public RecPassword() {
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -49,9 +48,10 @@ class Admin_Relatorio extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jTextField_Email = new javax.swing.JTextField();
+        jButton_Enviar = new javax.swing.JButton();
+        jLabel_Email = new javax.swing.JLabel();
         jLabel_Sair = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jLabel_minimize = new javax.swing.JLabel();
         jLabel_fechar = new javax.swing.JLabel();
         jPanel_title = new javax.swing.JPanel();
@@ -61,9 +61,43 @@ class Admin_Relatorio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new Color(204, 255, 204));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new Color(255, 255, 255));
+
+        jTextField_Email.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jTextField_Email.setForeground(new Color(153, 153, 153));
+        jTextField_Email.setText("email");
+        jTextField_Email.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_EmailFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_EmailFocusLost(evt);
+            }
+        });
+
+        jButton_Enviar.setBackground(new Color(0, 84, 140));
+        jButton_Enviar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 18)); // NOI18N
+        jButton_Enviar.setForeground(new Color(255, 255, 255));
+        jButton_Enviar.setText("Enviar");
+        jButton_Enviar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton_Enviar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton_EnviarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton_EnviarMouseExited(evt);
+            }
+        });
+        jButton_Enviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_EnviarActionPerformed(evt);
+            }
+        });
+
+        jLabel_Email.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel_Email.setText("Email:");
 
         jLabel_Sair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel_Sair.setText("Sair");
@@ -80,36 +114,34 @@ class Admin_Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jList1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Media para mais velhos que 90: \"+averages[0]+\"\\n",
-                "Media para os que estão entre 70 e 90: \"+averages[1]+\"\\n",
-                "Media para os que estão entre 50 e 70: \"+averages[2]+",
-                "Media para mais novos que 50: \"+averages[3]+"};
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(226, 226, 226)
+                .addGap(239, 239, 239)
                 .addComponent(jLabel_Sair)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton_Enviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addComponent(jTextField_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(65, 65, 65))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addGap(68, 68, 68)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addComponent(jButton_Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(jLabel_Sair))
         );
 
@@ -143,27 +175,27 @@ class Admin_Relatorio extends javax.swing.JFrame {
             }
         });
 
-        jPanel_title.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel_title.setBackground(new Color(204, 255, 204));
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setBackground(new Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel3.setText("Gerar Relatório");
+        jLabel3.setText("Recuperar Senha");
 
         javax.swing.GroupLayout jPanel_titleLayout = new javax.swing.GroupLayout(jPanel_title);
         jPanel_title.setLayout(jPanel_titleLayout);
         jPanel_titleLayout.setHorizontalGroup(
             jPanel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_titleLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_titleLayout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
         jPanel_titleLayout.setVerticalGroup(
             jPanel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_titleLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel3)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -172,10 +204,10 @@ class Admin_Relatorio extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel_logo, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                .addGap(47, 47, 47)
+                .addComponent(jLabel_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
                 .addComponent(jPanel_title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
+                .addGap(80, 80, 80)
                 .addComponent(jLabel_minimize, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,18 +254,54 @@ class Admin_Relatorio extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel_SairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseClicked
-        AdminOptions logoff = new AdminOptions();
-        logoff.setVisible(true);
-        logoff.pack();
-        logoff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private void jTextField_EmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_EmailFocusGained
+
+        if(jTextField_Email.getText().trim().toLowerCase().equals("email")) {
+            jTextField_Email.setText("");
+            jTextField_Email.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_jTextField_EmailFocusGained
+
+    private void jTextField_EmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_EmailFocusLost
+
+        if(jTextField_Email.getText().trim().equals("") ||
+            jTextField_Email.getText().trim().toLowerCase().equals("email")) {
+            jTextField_Email.setText("email");
+            jTextField_Email.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_jTextField_EmailFocusLost
+
+    private void jButton_EnviarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_EnviarMouseEntered
+
+        jButton_Enviar.setBackground(new Color(0, 101, 183));
+    }//GEN-LAST:event_jButton_EnviarMouseEntered
+
+    private void jButton_EnviarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_EnviarMouseExited
+
+        jButton_Enviar.setBackground(new Color(0, 84, 104));
+    }//GEN-LAST:event_jButton_EnviarMouseExited
+
+    private void jButton_EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EnviarActionPerformed
+        Password pass = new Password();
+
+        String email = jTextField_Email.getText();
+        pass.forgetPassword(email);
         this.dispose();
+
+    }//GEN-LAST:event_jButton_EnviarActionPerformed
+
+    private void jLabel_SairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseClicked
+        Login lgf = new Login();
+        this.dispose();
+        lgf.setVisible(true);
+        lgf.pack();
+        lgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }//GEN-LAST:event_jLabel_SairMouseClicked
 
     private void jLabel_SairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseEntered
@@ -301,35 +369,36 @@ class Admin_Relatorio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Admin_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Admin_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Admin_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Admin_Relatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecPassword.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Admin_Relatorio().setVisible(true);
+                new RecPassword().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_Enviar;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel_Email;
     private javax.swing.JLabel jLabel_Sair;
     private javax.swing.JLabel jLabel_fechar;
     private javax.swing.JLabel jLabel_logo;
     private javax.swing.JLabel jLabel_minimize;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel_title;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField_Email;
     // End of variables declaration//GEN-END:variables
 }
