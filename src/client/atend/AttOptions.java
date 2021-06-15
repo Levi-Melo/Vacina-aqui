@@ -298,10 +298,10 @@ public class AttOptions extends JFrame {
 
     private void jLabel_SairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseClicked
         Login logoff = new Login();
+        this.dispose();
         logoff.setVisible(true);
         logoff.pack();
         logoff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
     }//GEN-LAST:event_jLabel_SairMouseClicked
 
     private void jLabel_SairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseEntered
