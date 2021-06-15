@@ -8,11 +8,11 @@ package client.admin;
 import client.Login;
 import client.admin.actions.CadastroForm;
 import client.admin.actions.Remove;
+import client.admin.actions.Report;
 
-import java.awt.Color;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.*;
 
 /**
  *
@@ -304,8 +304,8 @@ public class AdminOptions extends javax.swing.JFrame {
 
     private void jButton_CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CadastrarActionPerformed
         CadastroForm cadastro = new CadastroForm();
+        this.dispose();
         cadastro.setVisible(true);
-        cadastro.setAlwaysOnTop(true);
 
     }//GEN-LAST:event_jButton_CadastrarActionPerformed
 
@@ -358,7 +358,9 @@ public class AdminOptions extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_GerarRelatorioMouseExited
 
     private void jButton_GerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GerarRelatorioActionPerformed
-        
+        Report rep = new Report();
+        this.dispose();
+        rep.setVisible(true);
     }//GEN-LAST:event_jButton_GerarRelatorioActionPerformed
 
     private void jButton_RemoverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_RemoverMouseEntered
@@ -371,6 +373,7 @@ public class AdminOptions extends javax.swing.JFrame {
 
     private void jButton_RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RemoverActionPerformed
         Remove remove =new Remove();
+        this.dispose();
         remove.setVisible(true);
     }//GEN-LAST:event_jButton_RemoverActionPerformed
 

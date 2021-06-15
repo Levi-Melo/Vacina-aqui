@@ -869,7 +869,8 @@ public class CadastroForm extends JFrame {
          perfil,  healthPosition,  priority);
 
         insert.insertPerson(p);
-        return;
+        this.dispose();
+
     }
 
     /**

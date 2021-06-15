@@ -6,7 +6,9 @@
 package client;
 
 import client.admin.AdminOptions;
+import client.atend.AttOptions;
 import data.PersonData;
+import services.AttendantsService;
 
 import java.awt.Color;
 import javax.swing.*;
@@ -334,14 +336,17 @@ public class Login extends javax.swing.JFrame {
 
             if(perfil == 1){
                 AdminOptions adm = new AdminOptions();
+                this.dispose();
                 adm.setVisible(true);
                 return;
             }
             if(perfil == 2){
-                //pagina de atendente
+                AttOptions att = new AttOptions();
+                this.dispose();
+                att.setVisible(true);
                 return;
             }
-            //msg de login ou senha errado;
+            JOptionPane.showMessageDialog(null,"Senha ou Cpf invalidos");
         return;
     }
 

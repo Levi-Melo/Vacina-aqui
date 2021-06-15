@@ -85,7 +85,13 @@ public class AttOptions extends JFrame {
         });
         jButton_Fila.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_FilaActionPerformed(evt);
+                try {
+                    jButton_FilaActionPerformed(evt);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -283,8 +289,11 @@ public class AttOptions extends JFrame {
         jButton_Fila.setBackground(new Color(0, 84, 104));
     }//GEN-LAST:event_jButton_FilaMouseExited
 
-    private void jButton_FilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FilaActionPerformed
-
+    private void jButton_FilaActionPerformed(java.awt.event.ActionEvent evt) throws SQLException, IOException {//GEN-FIRST:event_jButton_FilaActionPerformed
+        AttendantsService att = new AttendantsService();
+        Object[][] data = att.consultQueue();
+        Queue queue = new Queue(data);
+        queue.setVisible(true);
     }//GEN-LAST:event_jButton_FilaActionPerformed
 
     private void jLabel_SairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_SairMouseClicked

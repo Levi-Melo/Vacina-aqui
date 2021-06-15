@@ -57,7 +57,7 @@ public class PersonData {
         while (rst.next()){
             int id = rst.getInt(1);
             if(id > 0){
-                JOptionPane.showMessageDialog(null,"Cadastro Concluido, id criado foi: "+id);
+                JOptionPane.showMessageDialog(null,"Cadastro Concluido");
             }
         }
             connection.close();
@@ -100,8 +100,10 @@ public class PersonData {
             JOptionPane.showMessageDialog(null, "Você não pode remover um paciente");
             return;
         }
+
         int confirm = JOptionPane.showOptionDialog(null, pessoa, titleMessage, JOptionPane.
                 DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, remove, remove[0]);
+
         if(confirm == 1){
             JOptionPane.showMessageDialog(null,"Cancelando");
             connection.close();

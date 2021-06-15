@@ -3,25 +3,19 @@ package services;
 import data.ConnectionFactory;
 import entities.Person;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class AttendantsService {
-    String titleMessage = "Escolha a opção desejada";
-
-    Object[] options =
-            { "Ver Fila",
-                    "Confirmar vacinação",
-                    "Cancelar"
-            };
 
     public Object[][] consultQueue() throws SQLException, IOException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         Connection connection = connectionFactory.getConnection();
 
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE;");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM PEOPLE  WHERE ID_PERFIL = 3 AND DATA_DE_VACINACAO IS NULL order by NIVEL_DE_PRIORIDADE LIMIT 200;");
         stm.execute();
 
         ResultSet rst = stm.getResultSet();
@@ -35,6 +29,10 @@ public class AttendantsService {
             String city = rst.getString("CIDADE");
             int priority = rst.getInt("NIVEL_DE_PRIORIDADE");
             fila.add(new Person(id ,name, cpf, age, state , city ,priority));
+        }
+        if (fila.size()==0){
+            JOptionPane.showMessageDialog(null,"Fila vazia");
+            return new Object[0][0];
         }
         Object dados [][] = new Object[fila.size()][7];
         for(int i = 0; i<fila.size(); i++){
@@ -61,5 +59,6 @@ public class AttendantsService {
                 "LIMIT 1;");
         stm.setDate(1,Date.valueOf(date));
         stm.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Vacina confirmada");
     }
 }
